@@ -153,9 +153,9 @@ Status ChunkingHandler::EndSegmentIfStarted() const {
   auto segment_info = std::make_shared<SegmentInfo>();
   segment_info->start_timestamp = segment_start_time_.value();
   segment_info->duration = max_segment_time_ - segment_start_time_.value();
-  segment_info->segment_index =
-      current_segment_index_ + num_segments_before_last_cue_;
-
+  segment_info->segment_index = current_segment_index_ +
+                                num_segments_before_last_cue_ +
+                                chunking_params_.start_segment_number - 1;
   return DispatchSegmentInfo(kStreamIndex, std::move(segment_info));
 }
 
