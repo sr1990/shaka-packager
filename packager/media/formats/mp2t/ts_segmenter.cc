@@ -165,7 +165,7 @@ Status TsSegmenter::WritePesPackets() {
 
 Status TsSegmenter::FinalizeSegment(uint64_t start_timestamp,
                                     uint64_t duration,
-                                    int64_t segment_index) {
+                                    int64_t segment_number) {
   if (!pes_packet_generator_->Flush()) {
     return Status(error::MUXER_FAILURE, "Failed to flush PesPacketGenerator.");
   }
@@ -179,7 +179,7 @@ Status TsSegmenter::FinalizeSegment(uint64_t start_timestamp,
     return Status::OK;
   std::string segment_path =
       GetSegmentName(muxer_options_.segment_template, segment_start_timestamp_,
-                     segment_index, muxer_options_.bandwidth);
+                     segment_number, muxer_options_.bandwidth);
   const int64_t file_size = segment_buffer_.Size();
   std::unique_ptr<File, FileCloser> segment_file;
   segment_file.reset(File::Open(segment_path.c_str(), "w"));
@@ -201,7 +201,7 @@ Status TsSegmenter::FinalizeSegment(uint64_t start_timestamp,
     listener_->OnNewSegment(
         segment_path,
         start_timestamp * timescale_scale_ + transport_stream_timestamp_offset_,
-        duration * timescale_scale_, file_size, segment_index);
+        duration * timescale_scale_, file_size, segment_number);
   }
   segment_started_ = false;
 

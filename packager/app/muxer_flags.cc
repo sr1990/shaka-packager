@@ -55,4 +55,5 @@ DEFINE_int32(transport_stream_timestamp_offset_ms,
              "not allowed to be less than zero.");
 DEFINE_int64(start_segment_number,
              1,
-             "Indicates the startNumber in DASH SegmentTemplate.");
+             "Indicates the startNumber in DASH SegmentTemplate and HLS "
+             "segment name.");

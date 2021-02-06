@@ -51,7 +51,7 @@ Status TsMuxer::FinalizeSegment(size_t stream_id,
              ? Status::OK
              : segmenter_->FinalizeSegment(segment_info.start_timestamp,
                                            segment_info.duration,
-                                           segment_info.segment_index);
+                                           segment_info.segment_number);
 }
 
 void TsMuxer::FireOnMediaStartEvent() {
