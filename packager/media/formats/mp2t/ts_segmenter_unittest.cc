@@ -196,7 +196,7 @@ TEST_F(TsSegmenterTest, PassedSegmentDuration) {
   TsSegmenter segmenter(options, &mock_listener);
 
   const uint32_t kFirstPts = 1000;
-  const int64_t kSegmentNumber = 0;
+  const int64_t kSegmentNumber = 1;
 
   EXPECT_CALL(*mock_pes_packet_generator_, Initialize(_))
       .WillOnce(Return(true));
@@ -314,7 +314,7 @@ TEST_F(TsSegmenterTest, FinalizeSegment) {
   options.segment_template = "file$Number$.ts";
   TsSegmenter segmenter(options, nullptr);
 
-  const int64_t kSegmentNumber = 0;
+  const int64_t kSegmentNumber = 1;
 
   EXPECT_CALL(*mock_pes_packet_generator_, Initialize(_))
       .WillOnce(Return(true));
@@ -357,7 +357,7 @@ TEST_F(TsSegmenterTest, EncryptedSample) {
       0x01, 0x0F, 0x3C,
   };
 
-  const int64_t kSegmentNumber = 0;
+  const int64_t kSegmentNumber = 1;
 
   std::shared_ptr<MediaSample> sample1 =
       MediaSample::CopyFrom(kAnyData, arraysize(kAnyData), kIsKeyFrame);

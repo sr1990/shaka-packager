@@ -37,8 +37,8 @@ const char* kSegmentedFileTemplate = "memory://output/template-$Number$.vtt";
 const char* kSegmentedFileOutput1 = "memory://output/template-1.vtt";
 const char* kSegmentedFileOutput2 = "memory://output/template-2.vtt";
 
-const int64_t kSegmentNumber0 = 0;
 const int64_t kSegmentNumber1 = 1;
+const int64_t kSegmentNumber2 = 2;
 
 const uint64_t kSegmentDuration = 10000;
 const float kMillisecondsPerSecond = 1000.0f;
@@ -116,7 +116,7 @@ TEST_F(WebVttMuxerTest, WithOneSegmentAndWithOneSample) {
       Input(kInputIndex)
           ->Dispatch(StreamData::FromSegmentInfo(
               kStreamIndex, GetSegmentInfo(kSegmentStart, kSegmentDuration,
-                                           !kEncrypted, kSegmentNumber0))));
+                                           !kEncrypted, kSegmentNumber1))));
   ASSERT_OK(Input(kInputIndex)->FlushAllDownstreams());
 
   ASSERT_FILE_STREQ(kSegmentedFileOutput1, kExpectedOutput);
@@ -168,7 +168,7 @@ TEST_F(WebVttMuxerTest, WithTwoSegmentAndWithOneSample) {
       Input(kInputIndex)
           ->Dispatch(StreamData::FromSegmentInfo(
               kStreamIndex, GetSegmentInfo(kSegment1Start, kSegmentDuration,
-                                           !kEncrypted, kSegmentNumber0))));
+                                           !kEncrypted, kSegmentNumber1))));
   // Segment Two
   ASSERT_OK(
       Input(kInputIndex)
@@ -178,7 +178,7 @@ TEST_F(WebVttMuxerTest, WithTwoSegmentAndWithOneSample) {
       Input(kInputIndex)
           ->Dispatch(StreamData::FromSegmentInfo(
               kStreamIndex, GetSegmentInfo(kSegment2Start, kSegmentDuration,
-                                           !kEncrypted, kSegmentNumber1))));
+                                           !kEncrypted, kSegmentNumber2))));
   ASSERT_OK(Input(kInputIndex)->FlushAllDownstreams());
 
   ASSERT_FILE_STREQ(kSegmentedFileOutput1, kExpectedOutput1);
@@ -223,7 +223,7 @@ TEST_F(WebVttMuxerTest, WithAnEmptySegment) {
       Input(kInputIndex)
           ->Dispatch(StreamData::FromSegmentInfo(
               kStreamIndex, GetSegmentInfo(kSegment1Start, kSegmentDuration,
-                                           !kEncrypted, kSegmentNumber0))));
+                                           !kEncrypted, kSegmentNumber1))));
   // Segment Two
   ASSERT_OK(
       Input(kInputIndex)
@@ -233,7 +233,7 @@ TEST_F(WebVttMuxerTest, WithAnEmptySegment) {
       Input(kInputIndex)
           ->Dispatch(StreamData::FromSegmentInfo(
               kStreamIndex, GetSegmentInfo(kSegment2Start, kSegmentDuration,
-                                           !kEncrypted, kSegmentNumber1))));
+                                           !kEncrypted, kSegmentNumber2))));
   ASSERT_OK(Input(kInputIndex)->FlushAllDownstreams());
 
   ASSERT_FILE_STREQ(kSegmentedFileOutput1, kExpectedOutput1);

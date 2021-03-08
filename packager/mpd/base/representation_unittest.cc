@@ -272,7 +272,7 @@ TEST_F(RepresentationTest,
 
   const int64_t kStartTime = 199238u;
   const int64_t kDuration = 98u;
-  const int64_t kSegmentNumber = 0;
+  const int64_t kSegmentNumber = 1;
 
   std::unique_ptr<MockRepresentationStateChangeListener> listener(
       new MockRepresentationStateChangeListener());
@@ -501,7 +501,7 @@ class SegmentTemplateTest : public RepresentationTest {
   std::list<SegmentInfo> segment_infos_for_expected_out_;
   std::string expected_s_elements_;
   BandwidthEstimator bandwidth_estimator_;
-  int64_t segment_number_ = 0;
+  int64_t segment_number_ = 1;
 };
 
 // Estimate the bandwidth given the info from AddNewSegment().
@@ -529,6 +529,7 @@ TEST_F(SegmentTemplateTest, RepresentationClone) {
 
   auto cloned_representation =
       CopyRepresentation(*representation_, NoListener());
+
   const char kExpectedXml[] =
       "<Representation id=\"1\" bandwidth=\"0\" "
       " codecs=\"avc1.010101\" mimeType=\"video/mp4\" sar=\"1:1\" "

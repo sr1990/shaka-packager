@@ -426,7 +426,7 @@ TEST_F(LiveSegmentTimelineTest, OneSegmentInfoMatchingStartTimeAndNumber) {
 
 TEST_F(LiveSegmentTimelineTest, AllSegmentsSameDurationExpectLastOne) {
   const uint32_t kSegmentNumber1 = 1;
-  const uint32_t kSegmentNumber2 = 11;
+  const uint32_t kSegmentNumber11 = 11;
 
   const uint64_t kStartTime1 = 0;
   const uint64_t kDuration1 = 100;
@@ -438,7 +438,7 @@ TEST_F(LiveSegmentTimelineTest, AllSegmentsSameDurationExpectLastOne) {
 
   std::list<SegmentInfo> segment_infos = {
       {kStartTime1, kDuration1, kRepeat1, kSegmentNumber1},
-      {kStartTime2, kDuration2, kRepeat2, kSegmentNumber2},
+      {kStartTime2, kDuration2, kRepeat2, kSegmentNumber11},
   };
   RepresentationXmlNode representation;
   ASSERT_TRUE(representation.AddLiveOnlyInfo(media_info_, segment_infos));
@@ -453,7 +453,7 @@ TEST_F(LiveSegmentTimelineTest, AllSegmentsSameDurationExpectLastOne) {
 
 TEST_F(LiveSegmentTimelineTest, SecondSegmentInfoNonZeroRepeat) {
   const uint32_t kSegmentNumber1 = 1;
-  const uint32_t kSegmentNumber2 = 11;
+  const uint32_t kSegmentNumber11 = 11;
 
   const uint64_t kStartTime1 = 0;
   const uint64_t kDuration1 = 100;
@@ -465,7 +465,7 @@ TEST_F(LiveSegmentTimelineTest, SecondSegmentInfoNonZeroRepeat) {
 
   std::list<SegmentInfo> segment_infos = {
       {kStartTime1, kDuration1, kRepeat1, kSegmentNumber1},
-      {kStartTime2, kDuration2, kRepeat2, kSegmentNumber2},
+      {kStartTime2, kDuration2, kRepeat2, kSegmentNumber11},
   };
   RepresentationXmlNode representation;
   ASSERT_TRUE(representation.AddLiveOnlyInfo(media_info_, segment_infos));
@@ -484,7 +484,7 @@ TEST_F(LiveSegmentTimelineTest, SecondSegmentInfoNonZeroRepeat) {
 
 TEST_F(LiveSegmentTimelineTest, TwoSegmentInfoWithGap) {
   const uint32_t kSegmentNumber1 = 1;
-  const uint32_t kSegmentNumber2 = 11;
+  const uint32_t kSegmentNumber11 = 11;
 
   const uint64_t kStartTime1 = 0;
   const uint64_t kDuration1 = 100;
@@ -497,7 +497,7 @@ TEST_F(LiveSegmentTimelineTest, TwoSegmentInfoWithGap) {
 
   std::list<SegmentInfo> segment_infos = {
       {kStartTime1, kDuration1, kRepeat1, kSegmentNumber1},
-      {kStartTime2, kDuration2, kRepeat2, kSegmentNumber2},
+      {kStartTime2, kDuration2, kRepeat2, kSegmentNumber11},
   };
   RepresentationXmlNode representation;
   ASSERT_TRUE(representation.AddLiveOnlyInfo(media_info_, segment_infos));
