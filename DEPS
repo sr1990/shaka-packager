@@ -55,6 +55,9 @@ deps = {
   "src/packager/third_party/icu":
     Var("chromium_git") + "/chromium/deps/icu@ef5c735307d0f86c7622f69620994c9468beba99",
 
+  "src/packager/third_party/libpng/src":
+    Var("github") + "/glennrp/libpng@a40189cf881e9f0db80511c382292a5604c3c3d1",
+
   "src/packager/third_party/libwebm/src":
     Var("chromium_git") + "/webm/libwebm@d6af52a1e688fade2e2d22b6d9b0c82f10d38e0b",
 
@@ -71,7 +74,7 @@ deps = {
     Var("chromium_git") + "/chromium/src/tools/clang@723b25997f0aab45fe1776a0f74a14782e350f8f",  #513983
 
   "src/packager/tools/gyp":
-    Var("chromium_git") + "/external/gyp@e7079f0e0e14108ab0dba58728ff219637458563",
+    Var("chromium_git") + "/external/gyp@caa60026e223fc501e8b337fd5086ece4028b1c6",
 
   "src/packager/tools/valgrind":
     Var("chromium_git") + "/chromium/deps/valgrind@3a97aa8142b6e63f16789b22daafb42d202f91dc",
@@ -108,6 +111,8 @@ hooks = [
   {
     # Pull clang if needed or requested via GYP_DEFINES (GYP_DEFINES="clang=1").
     "name": "clang",
+    # Skip clang updates on Windows, where we don't use clang.
+    "condition": "not checkout_win",
     "pattern": ".",
     "action": ["python", "src/packager/tools/clang/scripts/update.py", "--if-needed"],
   },

@@ -47,7 +47,8 @@ Status WebMMuxer::InitializeMuxer() {
 }
 
 Status WebMMuxer::Finalize() {
-  DCHECK(segmenter_);
+  if (!segmenter_)
+    return Status::OK;
   Status segmenter_finalized = segmenter_->Finalize();
 
   if (!segmenter_finalized.ok())
@@ -58,7 +59,7 @@ Status WebMMuxer::Finalize() {
   return Status::OK;
 }
 
-Status WebMMuxer::AddSample(size_t stream_id, const MediaSample& sample) {
+Status WebMMuxer::AddMediaSample(size_t stream_id, const MediaSample& sample) {
   DCHECK(segmenter_);
   DCHECK_EQ(stream_id, 0u);
   if (sample.pts() < 0) {

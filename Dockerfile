@@ -15,10 +15,16 @@ RUN sed -i \
     /usr/include/malloc.h
 
 ENV GYP_DEFINES='clang=0 use_experimental_allocator_shim=0 use_allocator=none musl=1'
+# Alpine does not support python3 yet, but depot_tools enabled python3
+# by default. Disable python3 explicitly for now.
+# See https://github.com/google/shaka-packager/issues/763 for details.
+ENV GCLIENT_PY3=0
+# Bypass VPYTHON included by depot_tools, which no longer works in Alpine.
+ENV VPYTHON_BYPASS="manually managed python not supported by chrome operations"
 
 # Build shaka-packager
 WORKDIR shaka_packager
-RUN gclient config https://www.github.com/google/shaka-packager.git --name=src --unmanaged
+RUN gclient config https://github.com/google/shaka-packager.git --name=src --unmanaged
 COPY . src
 RUN gclient sync
 RUN cd src && ninja -C out/Release

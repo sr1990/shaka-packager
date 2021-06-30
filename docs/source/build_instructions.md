@@ -26,9 +26,14 @@ Note that `Git` must be v1.7.5 or above.
 
     to check whether you have it.
 
+*   Note that there is a known problem with 10.15 SDK or later right now. You
+    can workaround it by using 10.14 SDK. See
+    [#660](https://github.com/google/shaka-packager/issues/660#issuecomment-552576341)
+    for details.
+
 ## Windows system requirements
 
-* Visual Studio 2015 Update 3, see below (no other version is supported).
+* Visual Studio 2015 Update 3, 2017, or 2019. (See below.)
 * Windows 7 or newer.
 
 Install Visual Studio 2015 Update 3 or later - Community Edition should work if
@@ -37,6 +42,14 @@ its license is appropriate for you. Use the Custom Install option and select:
 - Visual C++, which will select three sub-categories including MFC
 - Universal Windows Apps Development Tools > Tools (1.4.1) and Windows 10 SDK
   (10.0.14393)
+
+If using VS 2017 or VS 2019, you must set the following environment variables,
+with versions and paths adjusted to match your actual system:
+
+```shell
+GYP_MSVS_VERSION="2019"
+GYP_MSVS_OVERRIDE_PATH="C:/Program Files (x86)/Microsoft Visual Studio/2019/Community"
+```
 
 ## Install `depot_tools`
 
@@ -62,12 +75,10 @@ Download the
 [depot_tools bundle](https://storage.googleapis.com/chrome-infra/depot_tools.zip)
 and extract it somewhere.
 
-*** note
-**Warning:** **DO NOT** use drag-n-drop or copy-n-paste extract from Explorer,
+**WARNING: DO NOT** use drag-n-drop or copy-n-paste extract from Explorer,
 this will not extract the hidden “.git” folder which is necessary for
 depot_tools to autoupdate itself. You can use “Extract all…” from the context
 menu though.
-***
 
 Add depot_tools to the start of your PATH (must be ahead of any installs of
 Python). Assuming you unzipped the bundle to C:\src\depot_tools, open:
@@ -180,7 +191,8 @@ Also, unlike Linux / Mac, 32-bit is chosen by default even if the system is
 configured to `out/%CONFIGURATION%_x64`, i.e.:
 
 ```shell
-$ GYP_DEFINES='target_arch=x64' gclient runhooks
+$ SET GYP_DEFINES='target_arch=x64' 
+$ gclient runhooks
 $ ninja -C out/Release_x64
 ```
 
@@ -262,7 +274,7 @@ export GYP_DEFINES='clang=0 use_experimental_allocator_shim=0 use_allocator=none
 Instead of running `sudo apt-get install` to install build dependencies, run:
 
 ```shell
-$ sudo pacman -S --needed python2 git curl gcc gcc-libs make
+$ sudo pacman -Sy --needed python2 git curl gcc gcc-libs make
 $ sudo ln -sf python2 /usr/bin/python
 ```
 
@@ -300,7 +312,7 @@ $ su -c 'yum install -y git python git curl gcc-c++ findutils bzip2 \
 Use `zypper` command to install dependencies:
 
 ```shell
-sudo zypper in git python python-xml git curl gcc-c++ tar
+sudo zypper in git python python-xml git curl gcc-c++ tar libncurses5
 ```
 
 ## Tips, tricks, and troubleshooting
@@ -336,6 +348,29 @@ resolve the issue:
 
 ```shell
 $ brew install curl --with-openssl
+```
+
+### Using an IDE
+
+No specific instructions are available.
+
+You might find Gyp generators helpful. Output is not guaranteed to work.
+Manual editing might be necessary.
+
+To generate CMakeLists.txt in out/Release and out/Debug use:
+
+```shell
+$ GYP_GENERATORS=cmake gclient runhooks
+```
+
+To generate IDE project files in out/Release and out/Debug use:
+
+```shell
+$ GYP_GENERATORS=eclipse gclient runhooks
+$ GYP_GENERATORS=xcode gclient runhooks
+$ GYP_GENERATORS=xcode_test gclient runhooks
+$ GYP_GENERATORS=msvs gclient runhooks
+$ GYP_GENERATORS=msvs_test gclient runhooks
 ```
 
 ## Contributing
